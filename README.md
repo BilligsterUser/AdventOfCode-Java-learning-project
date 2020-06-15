@@ -41,7 +41,7 @@ It will start a development server that will serve the frontend at http://localh
 for the frontend in the frontend folder.
 
 #### "Production" build
-You can also run a complete build fot the frontend and backend together if you specify the environment variable "FE_BUILD=true" and then
+You can also run a complete build for the frontend and backend together if you specify the environment variable "FE_BUILD=true" and then
 run the gradle build. We used this to deploy this app to heroku. It serves builds the frontend and copies the optimized
 production build to the resources folder of the backend. Then, the frontend will be served with the Spring Boot Application by Spring Boots's
 Tomcat.

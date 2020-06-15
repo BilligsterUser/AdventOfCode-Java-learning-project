@@ -2,7 +2,10 @@ package org.haffson.adventofcode.utils;
 
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,5 +16,36 @@ import java.util.Scanner;
  */
 @Component
 public class FileReaders {
+    //TODO read file as string
+    //TODO parse ints separated by '\n','\r\n' or ','
+    public static String readFile(String fileName) {
+        // if (!Files.exists(Paths.get(fileName))){return "";}
+        try {
+            return new String(Files.readAllBytes(Paths.get(fileName)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
+    public static Integer[] readFileAsIntArr(String fileName) {
+        return strToIntArr(readFile(fileName));
+    }
+    public static Integer[] strToIntArr(String str) {
+        if (str.length() == 0) {
+            return new Integer[0];
+        }
+        if (str.contains("\r\n")) {
+            str = str.replace("\r\n", ",");
+        }
+        if (str.contains("\n")) {
+            str = str.replace("\n", ",");
+        }
+        String[] strArr = str.split(",");
+        List<Integer> intList = new ArrayList<>();
+        for (int i = 0; i < strArr.length; i++) {
+            intList.add(Integer.parseInt(strArr[i]));
+        }
+        return intList.toArray(new Integer[0]);
+    }
 }

@@ -6,6 +6,7 @@ import org.haffson.adventofcode.utils.FileReaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -14,8 +15,14 @@ import java.util.HashMap;
 @Component
 public class Day01 implements Days {
 
-    /** The puzzle status {@code HashMap} */
+    /**
+     * The puzzle status {@code HashMap}
+     */
     private final HashMap<String, ProblemStatusEnum> problemStatus;
+    /**
+     * The frequencies {@code Integer[]}
+     */
+    private final Integer[] frequencies;
 
     /**
      * Causes the input file to be parsed into the frequencies array ({@code frequencies}).
@@ -25,10 +32,21 @@ public class Day01 implements Days {
     @Autowired
     Day01(FileReaders fileReaders) {
         this.problemStatus = new HashMap<>();
-        this.problemStatus.put("1", ProblemStatusEnum.UNSOLVED);
+        this.problemStatus.put("1", ProblemStatusEnum.SOLVED);
         this.problemStatus.put("2", ProblemStatusEnum.UNSOLVED);
-    }
 
+        // frequencies = new int[]{+1, -2, +3, +1}
+        // frequencies = new int[]{+1, +1, -2};
+        // frequencies = new int[]{-1, -2, -3};
+        frequencies = fileReaders.readFileAsIntArr("input/day1/1");
+    }
+    Day01(Integer[] _frequencies) {
+        this.problemStatus = new HashMap<>();
+        this.problemStatus.put("1", ProblemStatusEnum.SOLVED);
+        this.problemStatus.put("2", ProblemStatusEnum.UNSOLVED);
+
+        frequencies = _frequencies;
+    }
     @Override
     public int getDay() {
         return 1;
@@ -56,6 +74,8 @@ public class Day01 implements Days {
      * @return the final frequency
      */
     private int calculateFrequency() {
-        return 0;
+        int result = 0;
+        for (int i = 0; i < frequencies.length; i++) { result += frequencies[i]; }
+        return result;
     }
 }
