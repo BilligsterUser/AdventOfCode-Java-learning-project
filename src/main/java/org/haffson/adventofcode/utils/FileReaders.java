@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.Scanner;
 public class FileReaders {
     //TODO read file as string
     //TODO parse ints separated by '\n','\r\n' or ','
-    public static String readFile(String fileName) {
+    public String readFile(String fileName) {
         // if (!Files.exists(Paths.get(fileName))){return "";}
         try {
             return new String(Files.readAllBytes(Paths.get(fileName)));
@@ -28,10 +29,11 @@ public class FileReaders {
         return "";
     }
 
-    public static Integer[] readFileAsIntArr(String fileName) {
+    public Integer[] readFileAsIntArr(String fileName) {
         return strToIntArr(readFile(fileName));
     }
-    public static Integer[] strToIntArr(String str) {
+
+    public Integer[] strToIntArr(String str) {
         if (str.length() == 0) {
             return new Integer[0];
         }
@@ -47,5 +49,14 @@ public class FileReaders {
             intList.add(Integer.parseInt(strArr[i]));
         }
         return intList.toArray(new Integer[0]);
+    }
+
+    public String[] readFileAsStrArr(String fileName) {
+        try {
+            return Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8).toArray(new String[0]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new String[0];
     }
 }

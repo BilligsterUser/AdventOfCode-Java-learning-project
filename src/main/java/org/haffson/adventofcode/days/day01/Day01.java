@@ -6,8 +6,7 @@ import org.haffson.adventofcode.utils.FileReaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Implementation for <i>Day 1: Chronal Calibration</i>.
@@ -33,20 +32,22 @@ public class Day01 implements Days {
     Day01(FileReaders fileReaders) {
         this.problemStatus = new HashMap<>();
         this.problemStatus.put("1", ProblemStatusEnum.SOLVED);
-        this.problemStatus.put("2", ProblemStatusEnum.UNSOLVED);
+        this.problemStatus.put("2", ProblemStatusEnum.SOLVED);
 
         // frequencies = new int[]{+1, -2, +3, +1}
         // frequencies = new int[]{+1, +1, -2};
         // frequencies = new int[]{-1, -2, -3};
-        frequencies = fileReaders.readFileAsIntArr("input/day1/1");
+        frequencies = fileReaders.readFileAsIntArr("input/day1/input");
     }
+
     Day01(Integer[] _frequencies) {
         this.problemStatus = new HashMap<>();
         this.problemStatus.put("1", ProblemStatusEnum.SOLVED);
-        this.problemStatus.put("2", ProblemStatusEnum.UNSOLVED);
+        this.problemStatus.put("2", ProblemStatusEnum.SOLVED);
 
         frequencies = _frequencies;
     }
+
     @Override
     public int getDay() {
         return 1;
@@ -64,7 +65,18 @@ public class Day01 implements Days {
 
     @Override
     public String secondPart() {
-        return null;
+        return "Part 2 - Frequency: " + calcPart2();
+    }
+
+    public Integer calcPart2() {
+        Set<Integer> ints = new HashSet<Integer>();
+        Integer result = 0;
+        ints.add(result);
+        for (int i = 0; true; i++) {
+            if (frequencies.length==i){i=0;}
+            result += frequencies[i];
+            if (!ints.add(result)){return result; }
+        }
     }
 
     /**
@@ -75,7 +87,9 @@ public class Day01 implements Days {
      */
     private int calculateFrequency() {
         int result = 0;
-        for (int i = 0; i < frequencies.length; i++) { result += frequencies[i]; }
+        for (int i = 0; i < frequencies.length; i++) {
+            result += frequencies[i];
+        }
         return result;
     }
 }
